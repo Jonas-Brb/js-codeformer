@@ -1,0 +1,5 @@
+(): {someProperty: 'someValue'} => {
+                console.log('Oh noes!!');
+
+    return {someProperty: 'someValue'}
+            }

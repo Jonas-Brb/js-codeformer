@@ -1,0 +1,3 @@
+function arrowFunctionExpression (): number {
+	return 1 + 2
+}

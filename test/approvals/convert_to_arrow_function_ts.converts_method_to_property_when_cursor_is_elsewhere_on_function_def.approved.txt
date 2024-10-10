@@ -1,0 +1,4 @@
+something = (): {someProperty: 'someValue'} => {
+                console.log('This is a test');
+        return {someProperty: 'someValue'}
+            }

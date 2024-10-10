@@ -2,7 +2,7 @@ const { VARIABLE_DECLARATION, ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, F
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 const { first, getNodeType } = require('../../core-utils');
 const { getMethodBuilder } = require("../../builders/MethodBuilder");
-const { getFunctionBody, getFunctionParametersString } = require("../../function-utils/function-source");
+const { getFunctionBody, getFunctionParametersString, getFunctionReturnTypeString } = require("../../function-utils/function-source");
 
 const functionNodeTypes = [
     ARROW_FUNCTION_EXPRESSION,
@@ -41,12 +41,14 @@ function buildFunctionString(source, functionNode, functionName) {
     const functionType = FUNCTION_DECLARATION;
     const functionBody = buildFunctionBody(functionNode, source);
     const functionParameters = getFunctionParametersString(functionNode, source);
+    const functionReturnType = getFunctionReturnTypeString(functionNode, source);
 
     return getMethodBuilder({
         functionName,
         functionType,
         functionBody,
         functionParameters,
+        functionReturnType,
         async: functionNode.async,
         generator: functionNode.generator
     })

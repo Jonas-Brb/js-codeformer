@@ -29,6 +29,7 @@ class MethodBuilder {
         functionBody = '',
         functionName = 'newMethod',
         functionParameters = '',
+        functionReturnType = '',
         functionType = FUNCTION_DECLARATION,
         async = false,
         generator = false
@@ -36,6 +37,7 @@ class MethodBuilder {
         this.functionType = functionType;
         this.functionName = functionName;
         this.functionParameters = functionParameters;
+        this.functionReturnType = functionReturnType;
         this.functionBody = functionBody;
         this.asyncPrefix = async ? 'async ' : '';
         this.generatorInfix = generator ? '*' : '';
@@ -43,7 +45,7 @@ class MethodBuilder {
 
     buildFunctionDeclaration() {
         return [
-            `${this.asyncPrefix}function${this.generatorInfix} ${this.functionName} (${this.functionParameters}) {`,
+            `${this.asyncPrefix}function${this.generatorInfix} ${this.functionName} (${this.functionParameters})${this.functionReturnType} {`,
             `\t${this.functionBody}`,
             `}`
         ].join('\n');
@@ -51,7 +53,7 @@ class MethodBuilder {
 
     buildFunctionExpression() {
         return [
-            `${this.asyncPrefix}function${this.generatorInfix} (${this.functionParameters}) {`,
+            `${this.asyncPrefix}function${this.generatorInfix} (${this.functionParameters})${this.functionReturnType} {`,
             `\t${this.functionBody}`,
             `}`
         ].join('\n');
@@ -59,7 +61,7 @@ class MethodBuilder {
 
     buildClassMethod() {
         return [
-            `${this.asyncPrefix}${this.functionName}${this.generatorInfix} (${this.functionParameters}) {`,
+            `${this.asyncPrefix}${this.functionName}${this.generatorInfix} (${this.functionParameters})${this.functionReturnType} {`,
             `\t${this.functionBody}`,
             `}`
         ].join('\n');
@@ -67,7 +69,7 @@ class MethodBuilder {
 
     buildObjectMethod() {
         return [
-            `${this.asyncPrefix}${this.functionName}: function${this.generatorInfix} (${this.functionParameters}) {`,
+            `${this.asyncPrefix}${this.functionName}: function${this.generatorInfix} (${this.functionParameters})${this.functionReturnType} {`,
             `\t${this.functionBody}`,
             `},`
         ].join('\n');
@@ -115,9 +117,9 @@ class MethodBuilder {
             && this.isReturnStatement(sanitizedBodyLines)
             && !buildAsMultiline) {
 
-            return `${this.asyncPrefix}(${this.functionParameters}) => ${this.getSingleLineArrowBody(sanitizedBodyLines)}`;
+            return `${this.asyncPrefix}(${this.functionParameters})${this.functionReturnType} => ${this.getSingleLineArrowBody(sanitizedBodyLines)}`;
         } else {
-            return `${this.asyncPrefix}(${this.functionParameters}) => {
+            return `${this.asyncPrefix}(${this.functionParameters})${this.functionReturnType} => {
                 ${this.getMultilineArrowBody(sanitizedBodyLines, buildAsMultiline)}
             }`;
         }
@@ -142,6 +144,7 @@ function getMethodBuilder({
     functionType,
     functionName,
     functionParameters,
+    functionReturnType,
     functionBody,
     async,
     generator
@@ -150,6 +153,7 @@ function getMethodBuilder({
         functionType,
         functionName,
         functionParameters,
+        functionReturnType,
         functionBody,
         async,
         generator

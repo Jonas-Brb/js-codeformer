@@ -1,0 +1,3 @@
+function namedFunctionExpression (): void {
+	console.log('boo');
+}

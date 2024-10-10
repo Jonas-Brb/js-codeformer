@@ -209,6 +209,7 @@ const actions = [
 					));
 		}
 	},
+	// jobu:
 	{
 		commandId: 'cmstead.jscodeformer.convertToArrowFunction',
 		path: './modules/commands/convert-to-arrow-function/convert-to-arrow-function-action',
@@ -226,6 +227,7 @@ const actions = [
 			return findFunctionNode(selectionPath, functionNodeTypes) !== null;
 		}
 	},
+	// jobu:
 	{
 		commandId: 'cmstead.jscodeformer.convertToFunctionDeclaration',
 		path: './modules/commands/convert-to-function-declaration/convert-to-function-declaration-action',
@@ -248,6 +250,7 @@ const actions = [
 				&& functionNodeTypes.includes(initType)
 		}
 	},
+	// jobu:
 	{
 		commandId: 'cmstead.jscodeformer.convertToFunctionExpression',
 		path: './modules/commands/convert-to-function-expression/convert-to-function-expression-action',

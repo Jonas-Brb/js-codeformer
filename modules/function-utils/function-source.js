@@ -29,6 +29,20 @@ function getFunctionParametersString(functionNode, sourceText) {
     }
 }
 
+function getFunctionReturnTypeString(functionNode, sourceText) {
+    const functionHasValueNode = typeof functionNode.value !== 'undefined';
+    const functionReturnType = functionHasValueNode
+        ? functionNode.value.returnType
+        : functionNode.returnType;
+
+    if (functionReturnType) {
+        const returnTypeLocation = functionReturnType.loc
+        return getSourceSelection(sourceText, returnTypeLocation);
+    } else {
+        return '';
+    }
+}
+
 function getBodyNodeFromFunctionNode(functionNode) {
     return typeof functionNode.value !== 'undefined'
         ? functionNode.value.body
@@ -91,5 +105,6 @@ function getFunctionName(functionNode) {
 module.exports = {
     getFunctionBody,
     getFunctionName,
-    getFunctionParametersString
+    getFunctionParametersString,
+    getFunctionReturnTypeString
 };

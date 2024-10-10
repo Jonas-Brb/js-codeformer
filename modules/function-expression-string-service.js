@@ -2,7 +2,7 @@ const { getMethodBuilder } = require("./builders/MethodBuilder");
 const { variableTypes, getNewVariableBuilder } = require("./builders/VariableBuilder");
 const { METHOD_DEFINITION, FUNCTION_DECLARATION } = require("./constants/ast-node-types");
 const { getNodeType } = require("./core-utils");
-const { getFunctionName, getFunctionParametersString, getFunctionBody } = require("./function-utils/function-source");
+const { getFunctionName, getFunctionParametersString, getFunctionReturnTypeString, getFunctionBody } = require("./function-utils/function-source");
 
 function getNewFunctionExpressionString({
     functionNode,
@@ -14,10 +14,12 @@ function getNewFunctionExpressionString({
 
     const functionName = getFunctionName(functionNode);
     const functionParameters = getFunctionParametersString(functionNode, sourceText);
+    const functionReturnType = getFunctionReturnTypeString(functionNode, sourceText);
     const functionBody = buildFunctionBody(functionNode, sourceText);
 
     const functionString = getMethodBuilder({
         functionParameters: functionParameters,
+        functionReturnType: functionReturnType,
         functionBody: functionBody,
         functionType: functionType,
         async: functionNode.async,

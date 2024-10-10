@@ -98,6 +98,100 @@ describe('convert to arrow function', function () {
 
         const convertedFunctionString = getNewFunctionString(functionNode, testSource);
 
-        this.verify(convertedFunctionString);        
+        this.verify(convertedFunctionString);
+    });
+});
+
+describe('convert to arrow function ts', function () {
+    it('Converts fn declaration to arrow function assigned to const', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 14, column: 22 }),
+            end: buildEditorCoordinates({ line: 14, column: 22 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.ts');
+
+        console.log(testSource)
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = nodePath.find(node => getNodeType(node) === FUNCTION_DECLARATION);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);
+    });
+
+    it('Converts fn expression to arrow function', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 8, column: 31 }),
+            end: buildEditorCoordinates({ line: 8, column: 31 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.ts');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = nodePath.find(node => getNodeType(node) === FUNCTION_EXPRESSION);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);
+    });
+
+    it('Converts method to arrow function assigned to property', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 2, column: 12 }),
+            end: buildEditorCoordinates({ line: 2, column: 12 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.ts');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = nodePath.find(node => getNodeType(node) === METHOD_DEFINITION);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);
+    });
+
+    it('Does not add extra const on named function expression', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 19, column: 37 }),
+            end: buildEditorCoordinates({ line: 19, column: 37 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.ts');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = nodePath.find(node => getNodeType(node) === FUNCTION_EXPRESSION);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);
+    });
+
+    it('converts method to property when cursor is elsewhere on function def', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 2, column: 18 }),
+            end: buildEditorCoordinates({ line: 2, column: 18 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.ts');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = findFunctionNode(nodePath, functionNodeTypes);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);
     });
 });

@@ -1,0 +1,4 @@
+function multilineArrowFunctionExpression (): void {
+	console.log('yay');
+    console.log('something');
+}
